@@ -52,7 +52,7 @@ class A(Layer):
 
 class NNet():
     
-    def __init__(self, x_size, u_size, hidden_size=100):
+    def __init__(self, x_size, u_size, mu_scaling, hidden_size=100):
         self.x_size = x_size
         self.u_size = u_size
         self.hidden_size = hidden_size
@@ -66,7 +66,8 @@ class NNet():
         self.v.build(input_shape=(self.x_size, ))
         
         mu = Dense(input_dim=self.hidden_size, output_dim=self.u_size, activation='tanh', name='mu_dense')(fc2)
-        self.mu = Model(input=self.x, output=mu)
+        mu_scaled = Lambda(lambda x: mu_scaling * x)(mu)
+        self.mu = Model(input=self.x, output=mu_scaled)
         self.mu.build(input_shape=(self.x_size, ))
         
         l_all = Dense(
