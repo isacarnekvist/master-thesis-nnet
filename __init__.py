@@ -66,7 +66,7 @@ class NNet():
         self.v.build(input_shape=(self.x_size, ))
         
         mu = Dense(input_dim=self.hidden_size, output_dim=self.u_size, activation='tanh', name='mu_dense')(fc2)
-        mu_scaled = Lambda(lambda x: mu_scaling * x)(mu)
+        mu_scaled = Lambda(lambda x: mu_scaling * x, output_shape=(self.u_size, ))(mu)
         self.mu = Model(input=self.x, output=mu_scaled)
         self.mu.build(input_shape=(self.x_size, ))
         
