@@ -110,4 +110,4 @@ class PriorityBuffer():
             return old_node
 
     def __repr__(self):
-        return '<PriorityBuffer object with {} objects, max_value: {}>'.format(self.size, self.max_value())
+        return '<PriorityBuffer object with {} objects, max/mean value: {:.3f}/{:.3f}>'.format(self.size, self.max_value(), self.root.value / self.size)
